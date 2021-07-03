@@ -1,0 +1,143 @@
+{
+	"info": {
+		"_postman_id": "64c0c231-393d-4dde-959e-726690ba56de",
+		"name": "http-rest-api-cache-control",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "get-user-etag",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "If-None-Match",
+						"value": "\"919529ea7338b7b0d80ebb6c289413b7\"",
+						"description": "The correct is 919529ea7338b7b0d80ebb6c289413b7",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/etag/users/1234",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"etag",
+						"users",
+						"1234"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "put-user-tag",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "If-Match",
+						"value": "\"919529ea7338b7b0d80ebb6c289413b6\"",
+						"description": "The correct is 919529ea7338b7b0d80ebb6c289413b7",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"1234\",\n    \"firstName\": \"Test1\",\n    \"lastName\": \"Test1\",\n    \"lastModified\": \"2021-07-01T22:39:23.000+00:00\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/etag/users/1234",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"etag",
+						"users",
+						"1234"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-user-last-modified",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "If-Modified-Since",
+						"value": "Thu, 01 Jul 2021 20:39:23 GMT",
+						"description": "The correct is Thu, 01 Jul 2021 22:39:23 GMT",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/last-modified/users/1234",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"last-modified",
+						"users",
+						"1234"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "put-user-last-modified",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "If-Unmodified-Since",
+						"value": "Thu, 01 Jul 2021 20:39:23 GMT",
+						"description": "The correct is Thu, 01 Jul 2021 22:39:23 GMT",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"1234\",\n    \"firstName\": \"Test1\",\n    \"lastName\": \"Test1\",\n    \"lastModified\": \"2021-07-01T22:39:23.000+00:00\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/last-modified/users/1234",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"last-modified",
+						"users",
+						"1234"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

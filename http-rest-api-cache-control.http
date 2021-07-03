@@ -1,0 +1,67 @@
+### Variables
+@hostname = localhost
+@port = 8080
+@host = {{hostname}}:{{port}}
+@user = 1234
+@content-type= application/json
+@if-modified-since-ok= Thu, 01 Jul 2021 22:39:23 GMT
+@if-modified-since-no-ok= Thu, 01 Jul 2021 20:39:23 GMT
+
+@etag-ok= "919529ea7338b7b0d80ebb6c289413b7"
+@etag-no-ok= "919529ea7338b7b0d80ebb6c289413b6"
+@weak-etag-ok = W/"0feb37679b9771175df1e103ec87f47b5"
+@weak-etag-no-ok = "0feb37679b9771175df1e103ec87f47b5"
+
+
+
+### GET usuer 1234, if you send if-modified-since-ok, the service is going to
+### return 304 otherwise it will return 200
+GET /api/last-modified/users/{{user}} HTTP/1.1
+Host: {{host}}
+If-Modified-Since: {{if-modified-since-ok}}
+
+
+
+### Update usuer 1234, if you send if-modified-since-no-ok, the service is going to
+### return 412 otherwise it will return 200
+PUT /api/last-modified/users/{{user}} HTTP/1.1
+Host: {{host}}
+If-Unmodified-Since: {{if-modified-since-no-ok}}
+Content-Type: {{content-type}}
+
+{
+    "id": "1234",
+    "firstName": "Test1",
+    "lastName": "Test1",
+    "lastModified": "2021-07-01T22:39:23.000+00:00"
+}
+
+
+### GET usuer 1234, if you send etag-ok, the service is going to
+### return 304 otherwise it will return 200
+GET /api/etag/users/{{user}} HTTP/1.1
+Host: {{host}}
+If-None-Match: {{etag-ok}}
+
+
+
+### Update usuer 1234, if you send etag-no-ok, the service is going to
+### return 412 otherwise it will return 200
+PUT /api/etag/users/{{user}} HTTP/1.1
+Host: {{host}}
+If-Match: {{etag-no-ok}}
+Content-Type: {{content-type}}
+
+{
+    "id": "1234",
+    "firstName": "Test1",
+    "lastName": "Test1",
+    "lastModified": "2021-07-01T22:39:23.000+00:00"
+}
+
+
+### GET usuer 1234, if you send weak-etag-ok or weak-etag-no-ok,
+### the service is going to return 304
+GET /api/weak-etag/users/{{user}} HTTP/1.1
+Host: {{host}}
+If-None-Match: {{weak-etag-ok}}
